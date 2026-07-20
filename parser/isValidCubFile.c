@@ -38,7 +38,7 @@
 		- premiere et derniere ligne compose que de 1
 		- toutes les lignes doivent commencer et terminer par 1
 		- peut contenir des espaces
-		- donc peut contenir que 0 ,1 ,espace (espace, tab, ...) 
+		- donc peut contenir que 0 ,1 ,espace
 		  et N ou S ou E ou W(position et direction du joueur) 
 */
 
