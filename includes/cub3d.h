@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
+/*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/20 18:23:32 by malmany          ###   ########.fr       */
+/*   Updated: 2026/07/23 23:16:18 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,14 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include "../libft/libft.h"
+
+typedef struct s_game
+{
+	char	**map;
+	int		player_count;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
+}	t_game;
 
 #endif
