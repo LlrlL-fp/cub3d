@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_null_term_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/24 13:24:03 by malmany          ###   ########.fr       */
+/*   Created: 2026/07/24 14:49:40 by malmany           #+#    #+#             */
+/*   Updated: 2026/07/24 14:59:23 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "includes/cub3d.h"
 
-int	main(int argc, char **argv)
+int	get_size_null_term_array(char **array)
 {
-	if (argc != 2)
-		return (printf("must have 1 argument\n"), 1);
-	is_valid_cub_file(argv[1]);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+void	free_null_term_array(char **array)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

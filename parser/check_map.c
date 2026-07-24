@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/23 21:44:59 by lren              #+#    #+#             */
-/*   Updated: 2026/07/23 23:20:34 by lren             ###   ########.fr       */
+/*   Created: 2026/07/24 15:06:29 by malmany           #+#    #+#             */
+/*   Updated: 2026/07/24 15:06:31 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/cub3d.h"
+#include "../get_next_line/get_next_line.h"
+#include "../includes/error.h"
 
 bool	check_map(char *line, int fd)
 {
@@ -62,7 +63,3 @@ void	count_player(t_game *game, int y, int x)
 		game->player_dir = c;
 	}
 }
-
-//    y =ligne
-//	x =colonne
-// Enregistre la position et l'orientation initiales du joueur.
