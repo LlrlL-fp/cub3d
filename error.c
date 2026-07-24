@@ -11,12 +11,7 @@
 /* ************************************************************************** */
 #include "includes/cub3d.h"
 
-void	error_parsing(char *param, char *msg)
+void	error_msg(char *msg)
 {
-	printf("error\nParsing failed -> %s : %s\n", param, msg);
-}
-
-void	error_parsing_color(char *param, char *param2, char *msg)
-{
-	printf("error\nParsing failed : Invalid color format -> %s : %s -> %s\n", param, param2, msg);
+	printf("error\n%s\n", msg);
 }

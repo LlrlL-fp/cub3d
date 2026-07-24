@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "includes/cub3d.h"
+#include "includes/error.h"
 
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
-		return (printf("must have 1 argument\n"), 1);
+		return (error_msg(WRONG_NB_ARGUMENT), 1);
 	is_valid_cub_file(argv[1]);
 	return (0);
 }

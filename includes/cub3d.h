@@ -57,9 +57,9 @@ int		get_value_t_f_c(char c);
 char	*get_str_t_f_c(char c);
 char	*get_info_type(char c);
 char	*get_type(char c);
+bool	is_texture(char *c);
 
 //check floor_ceiling
-
 bool	is_floor_or_ceiling(char *c);
 bool	check_floor_ceiling(char *color, char *line);
 
@@ -69,5 +69,9 @@ bool	check_map(char *line, int fd);
 //utils null terminating array
 int		get_size_null_term_array(char **array);
 void	free_null_term_array(char **array);
+
+//cleanup
+void    free_line(char *line);
+void    free_line_and_array(char *line, char **array);
 
 #endif

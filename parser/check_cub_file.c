@@ -59,14 +59,6 @@ bool	is_valid_filename(char *filename)
 	return (true);
 }
 
-bool	is_texture(char *c)
-{
-	if (ft_strlen(c) == 2)
-		return (ft_strncmp(c, "NO", 2) == 0 || ft_strncmp(c, "SO", 2) == 0
-			|| ft_strncmp(c, "WE", 2) == 0 || ft_strncmp(c, "EA", 2) == 0);
-	return (false);
-}
-
 void	init_bool_array(bool *arr, int size)
 {
 	int	i;
@@ -79,20 +71,21 @@ void	init_bool_array(bool *arr, int size)
 	}
 }
 
-bool	check_if_already_present(char c, bool *is_present, char *line, char *type)
+bool	check_if_already_present(char c, bool *is_present, char *line,
+		char *type)
 {
 	int		value;
 
 	value = get_value_t_f_c(c);
 	if (is_present[value])
-		return (printf("error\n%s : %s %s already present\n",
-				line, get_str_t_f_c(c), type), true);
+		return (error_parsing_double(line, get_str_t_f_c(c),
+				type, ALREADY_PRESENT_ERROR), true);
 	else
 		is_present[value] = true;
 	return (false);
 }
 
-bool handle_textures_f_c(bool *is_present, char **line_split, char *line)
+bool	handle_textures_f_c(bool *is_present, char **line_split, char *line)
 {
 	int		size_line_split;
 	char	*info_type;
@@ -100,31 +93,35 @@ bool handle_textures_f_c(bool *is_present, char **line_split, char *line)
 	bool	is_already_present;
 
 	is_already_present = check_if_already_present(line_split[0][0],
-				is_present, line, get_type(line_split[0][0]));
+			is_present, line, get_type(line_split[0][0]));
 	if (is_already_present)
 		return (false);
 	info_type = get_info_type(line_split[0][0]);
 	value = get_value_t_f_c(line_split[0][0]);
 	size_line_split = get_size_null_term_array(line_split);
 	if (size_line_split == 1)
-	{
-		printf("error\n%s : missing %s\n", line, info_type);
-		return(false);
-	}
+		return (error_parsing_with_info_type(line, MISSING_INFO,
+				info_type), false);
 	if (size_line_split > 2)
 	{
-		printf("error\n%s : Only 2 informations required : identifier and %s\n", line, info_type);
-		if (value == F || value == C)
-			printf("Color in format [0,255],[0,255],[0,255] (no space between ',')\n");
-		return(false);
+		error_parsing_extra_infos(line, EXTRA_INFOS, info_type, value);
+		return (false);
 	}
-	if ((value == F || value == C) && !is_already_present )
+	if ((value == F || value == C) && ! is_already_present)
 		return (check_floor_ceiling(line_split[1], line));
 	else
-		return(!is_already_present);
+		return (! is_already_present);
 }
 
-bool	check_textures_and_f_c_and_map(int fd)
+/*bool	check_line(char *line)
+{
+	int		line_len;
+	char	**line_split;
+
+	line_len = ft_strlen(line);
+}*/
+
+bool	check_textures_and_f_c_and_map(int fd, char *filename)
 {
 	char	*line;
 	char	**line_split;
@@ -135,7 +132,7 @@ bool	check_textures_and_f_c_and_map(int fd)
 	init_bool_array(is_present, 6);
 	line = get_next_line(fd);
 	if (!line)
-		return (write(2, "error\nempty file\n", 17), false);
+		return (error_parsing(filename, EMPTY_FILE), false);
 	while (line && nb_l_valid != 6)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
@@ -145,26 +142,25 @@ bool	check_textures_and_f_c_and_map(int fd)
 		{
 			nb_l_valid++;
 			if (!handle_textures_f_c(is_present, line_split, line))
-				return (false);
+				return (free_line_and_array(line, line_split), false);
 		}
 		else if (line_split[0] && line_split[0][0] != '\n')
-			return (printf("error\nInvalid identifier : %s\n", line_split[0]),
+			return (error_parsing_identifier(line, line_split[0]),free_line_and_array(line, line_split),
 				false);
-		free(line);
-		free_null_term_array(line_split);
+		free_line_and_array(line, line_split);
 		line = get_next_line(fd);
 	}
 	if (line && nb_l_valid == 6)
-		check_map(line, fd);
+		return (check_map(line, fd));
 	else if (nb_l_valid != 6)
-		return (write(2, "error\nNo all textures or floor color or ceiling color present\n", 62),
+		return (free_line(line), error_parsing(filename, MISSING_TEXTURE_OR_F_OR_C),
 			false);
 	else
-		return (write(2, "error\nno map in file\n", 21), false);
+		return (free_line(line), error_parsing(filename, MISSING_MAP), false);
 	return (true);
 }
 
-bool is_valid_cub_file(char *filename)
+bool	is_valid_cub_file(char *filename)
 {
 	int		fd;
 
@@ -176,13 +172,11 @@ bool is_valid_cub_file(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		error_parsing(filename, FILE_OPENING_ERROR); 
+		error_parsing(filename, FILE_OPENING_ERROR);
 		return (false);
 	}
-	if (!check_textures_and_f_c_and_map(fd))
-		return (false);
+	if (!check_textures_and_f_c_and_map(fd, filename))
+		return (close(fd), false);
 	close(fd);
 	return (true);
 }
-
-

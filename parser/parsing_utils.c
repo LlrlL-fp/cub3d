@@ -63,3 +63,11 @@ char	*get_type(char c)
 		return ("color");
 	return ("error");
 }
+
+bool	is_texture(char *c)
+{
+	if (ft_strlen(c) == 2)
+		return (ft_strncmp(c, "NO", 2) == 0 || ft_strncmp(c, "SO", 2) == 0
+			|| ft_strncmp(c, "WE", 2) == 0 || ft_strncmp(c, "EA", 2) == 0);
+	return (false);
+}

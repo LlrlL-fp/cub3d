@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   parsing_error2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/24 20:31:20 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/24 20:31:22 by malmany          ###   ########.fr       */
+/*   Created: 2026/07/24 18:38:14 by malmany           #+#    #+#             */
+/*   Updated: 2026/07/24 18:38:17 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 
-void    free_line(char *line)
+void	error_parsing_color(char *line, char *param, char *msg)
 {
-    if (line)
-        free(line);
+	printf("error\nParsing failed : Invalid color format -> %s : %s -> %s\n",
+		line, param, msg);
 }
 
-void    free_line_and_array(char *line, char **array)
+void	error_parsing_identifier(char *line, char *param)
 {
-    free_line(line);
-    free_null_term_array(array);
+	printf("error\nParsing failed : %s : %s Invalid identifier.\n",
+		line, param);
 }
-
