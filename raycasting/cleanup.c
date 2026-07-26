@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 18:14:46 by lren              #+#    #+#             */
-/*   Updated: 2026/07/26 16:08:38 by lren             ###   ########.fr       */
+/*   Updated: 2026/07/26 20:17:54 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	exit_game(t_game *game)
 {
 	if (!game)
 		exit(EXIT_SUCCESS);
-	if (game->image && game->mlx)
-		mlx_destroy_image(game->mlx, game->image);
+	if (game->frame_image && game->mlx)
+		mlx_destroy_image(game->mlx, game->frame_image);
 	if (game->win && game->mlx)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
