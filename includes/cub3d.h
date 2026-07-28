@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
+/*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/20 18:23:32 by malmany          ###   ########.fr       */
+/*   Updated: 2026/07/28 20:06:54 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ typedef struct s_game
 	int			frame_bpp;
 	int			frame_size_line;
 	int			frame_endian;
-
+	t_file_info	file;
 	char		**map;
-	t_player	player;
 	t_texture	no;
 	t_texture	so;
 	t_texture	ea;
