@@ -39,10 +39,11 @@ static bool	check_color_composition(char *color, char *line)
 	}
 	if (nb_comma != 2)
 	{
-		{
+		if (nb_comma == 0 || nb_comma == 1)
+			error_parsing_color(line, color, COLOR_WRONG_NB_ARG_ERROR);
+		else
 			error_parsing_color(line, color, COLOR_NB_COMMAS_ERROR);
-			return (false);
-		}
+		return (false);
 	}
 	return (true);
 }
@@ -80,10 +81,10 @@ bool	check_floor_ceiling(char *color, char *line)
 	color_split = ft_split(color, ',');
 	size_split_color = get_size_null_term_array(color_split);
 	if (size_split_color != 3)
-		return (error_parsing_color(line, color,
-				COLOR_WRONG_COMMAS_ERROR), free_null_term_array(color_split), false);
+		return (error_parsing_color(line, color, COLOR_WRONG_NB_ARG_ERROR),
+			free_null_term_array(color_split), false);
 	if (!check_num_valid(color_split, line))
-		return (free_null_term_array(color_split),false);
+		return (free_null_term_array(color_split), false);
 	free_null_term_array(color_split);
 	return (true);
 }

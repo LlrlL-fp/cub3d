@@ -6,49 +6,19 @@
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2026/07/20 18:23:32 by malmany          ###   ########.fr       */
-=======
-/*   Updated: 2026/07/26 20:09:21 by lren             ###   ########.fr       */
->>>>>>> 3e4f2b1 (raycasting init)
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-// # include "mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
-
-# define NO 0
-# define SO 1
-# define WE 2
-# define EA 3
-# define F 4
-<<<<<<< HEAD
-# define C 5   
-
-typedef struct s_file_info
-{
-	bool	is_valid;
-	char	*north_path;
-	char	*south_path;
-	char	*west_path;
-	char	*east_path;
-	char	*floor_color;
-	char	*ceiling_color;
-	int		map_staarting_pos;
-	int		map_len;
-	int		map_witdh;
-}	t_file_info;
-
-=======
-# define C 5
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 500
@@ -65,13 +35,29 @@ typedef struct s_file_info
 
 # define EVENT_DESTROY 17
 
+//y = ligne, x = colonne
 typedef struct s_player
 {
-	int		x;
-	int		y;
+	int		pos_x;
+	int		pos_y;
 	char	dir;
-
 }	t_player;
+
+typedef struct s_file_info
+{
+	bool		is_valid;
+	char		*filename;
+	t_player	player;
+	char		*north_path;
+	char		*south_path;
+	char		*west_path;
+	char		*east_path;
+	char		*floor_color;
+	char		*ceiling_color;
+	int			map_starting_pos;
+	int			map_len;
+	int			map_width;
+}	t_file_info;
 
 typedef struct s_texture
 {
@@ -83,7 +69,7 @@ typedef struct s_texture
 	int		width;
 	int		height;
 }	t_texture;
->>>>>>> 3e4f2b1 (raycasting init)
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -102,41 +88,40 @@ typedef struct s_game
 	t_texture	we;
 }	t_game;
 
-<<<<<<< HEAD
-bool	is_valid_cub_file(char *filename);
+//player
+t_player	new_player(void);
+void		set_player(t_file_info *file_info, char dir,
+				int pos_x, int pos_y);
+
+// file info
+t_file_info	new_file_info(void);
+void		clean_file_info(t_file_info *f_inf);
+bool		set_info_in_file_info(t_file_info *f_inf,
+				char type_info, char *info, char *line);
+void		set_map_len_with(t_file_info *file_info, int len);
+
+t_file_info	check_cub_file(char *filename);
 
 //parsing utils
-int		get_value_t_f_c(char c);
-char	*get_str_t_f_c(char c);
-char	*get_info_type(char c);
-char	*get_type(char c);
-bool	is_texture(char *c);
+char		*get_str_t_f_c(char c);
+char		*get_info_type(char c);
+char		*get_type(char c);
+bool		is_texture(char *c);
+bool		is_already_present(char c, t_file_info *file_info);
+bool		is_player_dir(char c);
+bool		is_valid_map_car(char c);
+int			max(int a, int b);
+int			get_line_len_without_nl(char *line);
 
 //check floor_ceiling
-bool	is_floor_or_ceiling(char *c);
-bool	check_floor_ceiling(char *color, char *line);
+bool		is_floor_or_ceiling(char *c);
+bool		check_floor_ceiling(char *color, char *line);
 
 //check map
-bool	check_map(char *line, int fd);
+bool		check_map(char *line, int fd, t_file_info *file_info);
 
 //utils null terminating array
-int		get_size_null_term_array(char **array);
-void	free_null_term_array(char **array);
-
-//cleanup
-void    free_line(char *line);
-void    free_line_and_array(char *line, char **array);
+int			get_size_null_term_array(char **array);
+void		free_null_term_array(char **array);
 
 #endif
-=======
-//init_all
-bool	init_mlx(t_game *game);
-//event
-int		key_handler(int keycode, t_game *game);
-//cleanup
-int		exit_game(t_game *game);
-
-
-#endif
-
->>>>>>> 3e4f2b1 (raycasting init)

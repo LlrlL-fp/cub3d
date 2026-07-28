@@ -13,53 +13,120 @@
 #include "../get_next_line/get_next_line.h"
 #include "../includes/error.h"
 
-bool	check_map(char *line, int fd)
+bool	check_first_last_line(char *line, t_file_info *file_info)
 {
-	printf("line : %s\n", line);
-	free(line);
-	line = get_next_line(fd);
-	if (line)
-		printf("line2 : %s\n", line);
-	free(line);
+	int		i;
+	int		len;
+
+	i = 0;
+	len = get_line_len_without_nl(line);
+	while (i < len)
+	{
+		if (line[i] != '1' && line[i] != ' ')
+			return (error_parsing_map(line, WRONG_FIRST_LINE_MAP,
+					(file_info->map_width) + 1), false);
+		i++;
+	}
+	file_info->map_len = max(file_info->map_len, len);
 	return (true);
 }
 
-bool	exist_char(t_game *game)
+bool	is_valid_middle_line(char *line, t_file_info *file_info)
 {
-	int		y;
-	int		x;
-	char	c;
+	int		i;
+	int		len;
 
-	y = 0;
-	if (!game || !game->map)
-		return (false);
-	while (game->map[y])
+	if (line[0] == '\n')
+		return (error_parsing_map_nl(NL_IN_MAP_ERROR,
+				(file_info->map_width) + 1), false);
+	i = 0;
+	len = get_line_len_without_nl(line);
+	if (line[0] != '1' || line[len - 1] != '1')
+		return (error_parsing_map(line, WRONG_MIDDLE_LINE_CLOSURE_MAP,
+				(file_info->map_width) + 1), false);
+	while (++i < len)
 	{
-		x = 0;
-		while (game->map[y][x] && game->map[y][x] != '\n')
+		if (!is_valid_map_car(line[i]))
+			return (error_parsing_map(line, WRONG_MIDDLE_LINE_MAP,
+					(file_info->map_width) + 1), false);
+		if (is_player_dir(line[i]))
 		{
-			c = game->map[y][x];
-			if (c != '0' && c != '1' && c != 'N' && c != 'S'
-				&& c != 'E' && c != 'W' && c != ' ')
-				return (false);
-			x++;
+			if (file_info->player.dir)
+				return (error_parsing_map_multi_player(line, MAP_MULTI_PLAYER,
+						(file_info->map_width) + 1, file_info), false);
+			set_player(file_info, line[i], i + 1, (file_info->map_width) + 1);
 		}
-		y++;
 	}
-	return (true);
+	return (set_map_len_with(file_info, len), true);
 }
-// Vérifie que la carte contient uniquement : 0, 1, N, S, E, W et les espaces.
 
-void	count_player(t_game *game, int y, int x)
+bool	check_map_width_len_player(int len, int width, char player_dir)
 {
-	char	c;
+	bool	res;
 
-	c = game->map[y][x];
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	res = true;
+	if (len < 3)
 	{
-		game->player_count++;
-		game->player_x = x;
-		game->player_y = y;
-		game->player_dir = c;
+		error_parsing_map_len_width(WRONG_MAP_LEN);
+		res = false;
 	}
+	if (width < 3)
+	{
+		error_parsing_map_len_width(WRONG_MAP_WIDTH);
+		res = false;
+	}
+	if (!player_dir)
+	{
+		error_parsing_map_len_width(NO_PLAYER_MAP);
+		res = false;
+	}
+	return (res);
+}
+
+bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
+{
+	while (line && line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+		(file_info->map_starting_pos)++;
+	}
+	if (line)
+	{
+		if (!check_first_last_line(line, file_info))
+			return (free(line), false);
+		file_info->map_width++;
+		free(line);
+		return (true);
+	}
+	else
+		return (error_parsing(file_info->filename, MISSING_MAP), false);
+}
+
+bool	check_map(char *line, int fd, t_file_info *file_info)
+{
+	char	*previous_line;
+
+	previous_line = NULL;
+	if (!get_and_check_first_line(line, fd, file_info))
+		return (false);
+	line = get_next_line(fd);
+	if (!line)
+		return (error_parsing_map_len_width(ONE_LINE_ONLY_IN_MAP), false);
+	while (line)
+	{
+		free(previous_line);
+		previous_line = ft_strdup(line);
+		if (! previous_line)
+			return (error_parsing(line, MALLOC_FAILED), free(line), false);
+		if (!is_valid_middle_line(line, file_info))
+			return (free(previous_line), free(line), false);
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (!check_first_last_line(previous_line, file_info))
+		return (free(line), free(previous_line), false);
+	return (free(line), free(previous_line),
+		check_map_width_len_player(file_info->map_len, file_info->map_width,
+			file_info->player.dir));
 }

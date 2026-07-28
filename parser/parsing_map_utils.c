@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_map_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/24 13:24:03 by malmany          ###   ########.fr       */
+/*   Created: 2026/07/28 18:09:53 by malmany           #+#    #+#             */
+/*   Updated: 2026/07/28 18:09:55 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "includes/cub3d.h"
-#include "includes/error.h"
-#include "get_next_line/get_next_line.h"
+#include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+bool	is_player_dir(char c)
 {
-	t_file_info	file_info;
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
+}
 
-	if (argc != 2)
-		return (error_msg(WRONG_NB_ARGUMENT), 1);
-	file_info = check_cub_file(argv[1]);
-	clean_file_info(&file_info);
-	return (0);
+bool	is_valid_map_car(char c)
+{
+	return (c == '1' || c == '0' || c == ' ' || is_player_dir(c));
 }

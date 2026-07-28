@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,51 +11,37 @@
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "../includes/error.h"
 
-char	*get_str_t_f_c(char c)
+bool	is_texture(char *c)
+{
+	if (ft_strlen(c) == 2)
+		return (ft_strncmp(c, "NO", 2) == 0 || ft_strncmp(c, "SO", 2) == 0
+			|| ft_strncmp(c, "WE", 2) == 0 || ft_strncmp(c, "EA", 2) == 0);
+	return (false);
+}
+
+bool	is_already_present(char c, t_file_info *file_info)
 {
 	if (c == 'N')
-		return ("North");
+		return (!(file_info->north_path == NULL));
 	else if (c == 'S')
-		return ("South");
-	else if (c == 'W')
-		return ("West");
+		return (!(file_info->south_path == NULL));
 	else if (c == 'E')
-		return ("East");
+		return (!(file_info->east_path == NULL));
+	else if (c == 'W')
+		return (!(file_info->west_path == NULL));
 	else if (c == 'F')
-		return ("Floor");
+		return (!(file_info->floor_color == NULL));
 	else if (c == 'C')
-		return ("Ceiling");
-	return ("Error");
+		return (!(file_info->ceiling_color == NULL));
+	return (false);
 }
 
-char	*get_info_type(char c)
+int	max(int a, int b)
 {
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return ("path");
-	else if (c == 'F' || c == 'C')
-		return ("color");
-	return ("error");
-}
-
-char	*get_type(char c)
-{
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return ("texture");
-	else if (c == 'F' || c == 'C')
-		return ("color");
-	return ("error");
-}
-
-int	get_line_len_without_nl(char *line)
-{
-	int	len;
-
-	len = ft_strlen(line);
-	if (line[len - 1] == '\n')
-	{
-		line[len -1] = '\0';
-		len--;
-	}
-	return (len);
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }

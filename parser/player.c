@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/24 13:24:03 by malmany          ###   ########.fr       */
+/*   Created: 2026/07/28 10:19:59 by malmany           #+#    #+#             */
+/*   Updated: 2026/07/28 10:20:02 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "includes/cub3d.h"
-#include "includes/error.h"
-#include "get_next_line/get_next_line.h"
+#include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+t_player	new_player(void)
 {
-	t_file_info	file_info;
+	t_player	res;
 
-	if (argc != 2)
-		return (error_msg(WRONG_NB_ARGUMENT), 1);
-	file_info = check_cub_file(argv[1]);
-	clean_file_info(&file_info);
-	return (0);
+	res.pos_x = -1;
+	res.pos_y = -1;
+	res.dir = '\0';
+	return (res);
+}
+
+void	set_player(t_file_info *file_info, char dir, int pos_x, int pos_y)
+{
+	file_info->player.dir = dir;
+	file_info->player.pos_x = pos_x;
+	file_info->player.pos_y = pos_y;
 }

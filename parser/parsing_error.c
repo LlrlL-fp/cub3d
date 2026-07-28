@@ -28,10 +28,10 @@ void	error_parsing_with_info_type(char *line, char *msg, char *info_type)
 }
 
 void	error_parsing_extra_infos(char *line, char *msg,
-			char *info_type, int value)
+			char *info_type, char c)
 {
 	error_parsing_with_info_type(line, msg, info_type);
-	if (value == F || value == C)
+	if (c == 'F' || c == 'C')
 		printf("               -> Color expected in format [0,255],[0,255],\
 [0,255] (no space between ',')\n");
 }

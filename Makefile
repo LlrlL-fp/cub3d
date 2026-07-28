@@ -5,7 +5,9 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 SRC = parser/check_cub_file.c get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 	  main.c error.c utils_null_term_array.c parser/check_map.c parser/parsing_utils.c          \
-	  parser/check_floor_ceiling.c parser/parsing_error.c parser/parsing_error2.c cleanup.c
+	  parser/check_floor_ceiling.c parser/parsing_error.c parser/parsing_error2.c               \
+	  parser/parsing_utils2.c parser/file_info.c parser/player.c parser/parsing_map_error.c     \
+	  parser/parsing_map_utils.c
 
 INCLUDE = libft/libft.h includes/cub3d.h includes/error.h 
 

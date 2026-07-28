@@ -44,7 +44,7 @@
 */
 
 // verifie si le nom du fichier termine par .cub
-bool	is_valid_filename(char *filename)
+static bool	is_valid_filename(char *filename)
 {
 	int	len;
 
@@ -59,124 +59,116 @@ bool	is_valid_filename(char *filename)
 	return (true);
 }
 
-void	init_bool_array(bool *arr, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		arr[i] = false;
-		i++;
-	}
-}
-
-bool	check_if_already_present(char c, bool *is_present, char *line,
-		char *type)
-{
-	int		value;
-
-	value = get_value_t_f_c(c);
-	if (is_present[value])
-		return (error_parsing_double(line, get_str_t_f_c(c),
-				type, ALREADY_PRESENT_ERROR), true);
-	else
-		is_present[value] = true;
-	return (false);
-}
-
-bool	handle_textures_f_c(bool *is_present, char **line_split, char *line)
+static bool	handle_textures_f_c(char **line_split, char *line,
+		t_file_info *file_info)
 {
 	int		size_line_split;
 	char	*info_type;
-	int		value;
-	bool	is_already_present;
+	bool	is_present;
 
-	is_already_present = check_if_already_present(line_split[0][0],
-			is_present, line, get_type(line_split[0][0]));
-	if (is_already_present)
-		return (false);
 	info_type = get_info_type(line_split[0][0]);
-	value = get_value_t_f_c(line_split[0][0]);
+	is_present = is_already_present(line_split[0][0], file_info);
+	if (is_present)
+		return (error_parsing_double(line, get_str_t_f_c(line_split[0][0]),
+			info_type, ALREADY_PRESENT_ERROR), false);
 	size_line_split = get_size_null_term_array(line_split);
 	if (size_line_split == 1)
 		return (error_parsing_with_info_type(line, MISSING_INFO,
 				info_type), false);
 	if (size_line_split > 2)
 	{
-		error_parsing_extra_infos(line, EXTRA_INFOS, info_type, value);
+		error_parsing_extra_infos(line, EXTRA_INFOS,
+			info_type, line_split[0][0]);
 		return (false);
 	}
-	if ((value == F || value == C) && ! is_already_present)
+	if ((line_split[0][0] == 'F' || line_split[0][0] == 'C') && ! is_present)
 		return (check_floor_ceiling(line_split[1], line));
 	else
-		return (! is_already_present);
+		return (! is_present);
 }
 
-/*bool	check_line(char *line)
+static bool	check_line(char *line, int *nb_l_valid, t_file_info *file_info)
 {
 	int		line_len;
 	char	**line_split;
+	bool	res;
 
+	res = true;
 	line_len = ft_strlen(line);
-}*/
+	if (line[line_len - 1] == '\n')
+		line[line_len - 1] = '\0';
+	line_split = ft_split(line, ' ');
+	if (is_texture(line_split[0]) || is_floor_or_ceiling(line_split[0]))
+	{
+		if (!handle_textures_f_c(line_split, line, file_info))
+			res = false;
+		if (res && ! set_info_in_file_info(file_info, line_split[0][0],
+			ft_strdup(line_split[1]), line))
+			res = false;
+		(*nb_l_valid)++;
+	}
+	else if (line_split[0])
+	{
+		error_parsing_identifier(line, line_split[0]);
+		res = false;
+	}
+	return (free_null_term_array(line_split), res);
+}
 
-bool	check_textures_and_f_c_and_map(int fd, char *filename)
+static bool	check_textures_and_f_c_and_map(int fd, char *filename,
+			t_file_info *file_info)
 {
 	char	*line;
-	char	**line_split;
-	bool	is_present[6];
 	int		nb_l_valid;
 
 	nb_l_valid = 0;
-	init_bool_array(is_present, 6);
 	line = get_next_line(fd);
+	file_info->map_starting_pos++;
+	file_info->filename = filename;
 	if (!line)
 		return (error_parsing(filename, EMPTY_FILE), false);
 	while (line && nb_l_valid != 6)
 	{
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		line_split = ft_split(line, ' ');
-		if (is_texture(line_split[0]) || is_floor_or_ceiling(line_split[0]))
-		{
-			nb_l_valid++;
-			if (!handle_textures_f_c(is_present, line_split, line))
-				return (free_line_and_array(line, line_split), false);
-		}
-		else if (line_split[0] && line_split[0][0] != '\n')
-			return (error_parsing_identifier(line, line_split[0]),free_line_and_array(line, line_split),
-				false);
-		free_line_and_array(line, line_split);
+		file_info->map_starting_pos++;
+		if (!check_line(line, &nb_l_valid, file_info))
+			return (free(line), false);
+		free(line);
 		line = get_next_line(fd);
 	}
 	if (line && nb_l_valid == 6)
-		return (check_map(line, fd));
+		return (check_map(line, fd, file_info));
 	else if (nb_l_valid != 6)
-		return (free_line(line), error_parsing(filename, MISSING_TEXTURE_OR_F_OR_C),
+		return (free(line), error_parsing(filename, MISSING_TEXTURE_OR_F_OR_C),
 			false);
 	else
-		return (free_line(line), error_parsing(filename, MISSING_MAP), false);
+		return (free(line), error_parsing(filename, MISSING_MAP), false);
 	return (true);
 }
 
-bool	is_valid_cub_file(char *filename)
+t_file_info	check_cub_file(char *filename)
 {
-	int		fd;
+	int			fd;
+	t_file_info	res;
 
+	res = new_file_info();
 	if (!is_valid_filename(filename))
 	{
 		error_parsing(filename, EXTENSION_ERROR);
-		return (false);
+		res.is_valid = false;
+		return (res);
 	}
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
 		error_parsing(filename, FILE_OPENING_ERROR);
-		return (false);
+		res.is_valid = false;
+		return (res);
 	}
-	if (!check_textures_and_f_c_and_map(fd, filename))
-		return (close(fd), false);
+	if (!check_textures_and_f_c_and_map(fd, filename, &res))
+	{
+		res.is_valid = false;
+		return (close(fd), res);
+	}
 	close(fd);
-	return (true);
+	return (res);
 }
