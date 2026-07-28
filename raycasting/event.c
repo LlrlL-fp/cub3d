@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 17:42:27 by lren              #+#    #+#             */
-/*   Updated: 2026/07/26 20:18:16 by lren             ###   ########.fr       */
+/*   Updated: 2026/07/29 00:16:38 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,63 @@ int	key_handler(int keycode, t_game *game)
 		return (exit_game(game));
 	return (0);
 }
+
+void	move_forward(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+void	move_backward(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+void	move_left(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+void	move_right(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+void	rotate_left(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+void	rotate_right(t_game *game)
+{
+	if (!game)
+		return ;
+}
+
+int	key_handler(int keycode, t_game *game)
+{
+	if (keycode == KEY_ESC)
+		return (exit_game(game));
+	else if (keycode == KEY_W)
+		move_forward(game);
+	else if (keycode == KEY_S)
+		move_backward(game);
+	else if (keycode == KEY_A)
+		move_left(game);
+	else if (keycode == KEY_D)
+		move_right(game);
+	else if (keycode == KEY_LEFT)
+		rotate_left(game);
+	else if (keycode == KEY_RIGHT)
+		rotate_right(game);
+	return (0);
+}
+
+
 
 int	main(int argc, char **argv)
 {

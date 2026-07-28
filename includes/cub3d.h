@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/28 20:06:54 by lren             ###   ########.fr       */
+/*   Updated: 2026/07/29 00:15:55 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,32 @@ bool		check_map(char *line, int fd, t_file_info *file_info);
 //utils null terminating array
 int			get_size_null_term_array(char **array);
 void		free_null_term_array(char **array);
+
+//init all
+bool		init_mlx(t_game *game);
+bool		init_image(t_game *game);
+bool		init_one_texture(t_game *game, t_texture *texture, char *path);
+bool		init_texture(t_game *game);
+
+//cleanup
+int			exit_game(t_game *game);
+
+//event
+int			key_handler(int keycode, t_game *game);
+void		move_forward(t_game *game);
+void		move_backward(t_game *game);
+void		move_left(t_game *game);
+void		move_right(t_game *game);
+void		rotate_left(t_game *game);
+void		rotate_right(t_game *game);
+int			key_handler(int keycode, t_game *game);
+
+
+
+
+
+
+
+
 
 #endif
