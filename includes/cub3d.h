@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/29 00:15:55 by lren             ###   ########.fr       */
+/*   Updated: 2026/07/30 00:28:57 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,13 @@ bool		init_image(t_game *game);
 bool		init_one_texture(t_game *game, t_texture *texture, char *path);
 bool		init_texture(t_game *game);
 
+// draw
+void		draw_pixel(t_game *game, int x, int y, int color);
+
 //cleanup
+void		destroy_texture(t_game *game);
 int			exit_game(t_game *game);
+
 
 //event
 int			key_handler(int keycode, t_game *game);

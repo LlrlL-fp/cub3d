@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/25 18:14:46 by lren              #+#    #+#             */
-/*   Updated: 2026/07/26 20:17:54 by lren             ###   ########.fr       */
+/*   Created: 2026/07/30 00:15:08 by lren              #+#    #+#             */
+/*   Updated: 2026/07/30 00:15:28 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	exit_game(t_game *game)
+void	draw_pixel(t_game *game, int x, int y, int color)
 {
-	if (!game)
-		exit(EXIT_SUCCESS);
-	if (game->frame_image && game->mlx)
-		mlx_destroy_image(game->mlx, game->frame_image);
-	if (game->win && game->mlx)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-	exit(EXIT_SUCCESS);
-	return (0);
-}
+	unsigned int	*pixel;
 
-//void mlx_destroy_display(void *mlx_ptr);
-//int mlx_destroy_window(void *mlx_ptr, void *win_ptr);
+	if (!game || !game->frame_addr)
+		return ;
+	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
+		return ;
+	pixel = (unsigned int *)(game->frame_addr
+			+ y * game->frame_size_line
+			+ x * (game->frame_bpp / 8));
+	*pixel = color;
+}
