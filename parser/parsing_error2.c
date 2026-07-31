@@ -13,12 +13,12 @@
 
 void	error_parsing_color(char *line, char *param, char *msg)
 {
-	printf("error\nParsing failed : Invalid color format -> %s : %s -> %s\n",
+	printf("Error\nParsing failed : Invalid color format -> %s : %s -> %s\n",
 		line, param, msg);
 }
 
 void	error_parsing_identifier(char *line, char *param)
 {
-	printf("error\nParsing failed : %s : %s Invalid identifier.\n",
+	printf("Error\nParsing failed : %s : %s Invalid identifier.\n",
 		line, param);
 }

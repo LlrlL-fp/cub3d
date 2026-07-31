@@ -13,7 +13,7 @@
 #include "../get_next_line/get_next_line.h"
 #include "../includes/error.h"
 
-bool	check_first_last_line(char *line, t_file_info *file_info)
+static bool	check_first_last_line(char *line, t_file_info *file_info)
 {
 	int		i;
 	int		len;
@@ -31,7 +31,7 @@ bool	check_first_last_line(char *line, t_file_info *file_info)
 	return (true);
 }
 
-bool	is_valid_middle_line(char *line, t_file_info *file_info)
+static bool	is_valid_middle_line(char *line, t_file_info *file_info)
 {
 	int		i;
 	int		len;
@@ -60,7 +60,7 @@ bool	is_valid_middle_line(char *line, t_file_info *file_info)
 	return (set_map_len_with(file_info, len), true);
 }
 
-bool	check_map_width_len_player(int len, int width, char player_dir)
+static bool	check_map_width_len_player(int len, int width, char player_dir)
 {
 	bool	res;
 
@@ -83,7 +83,7 @@ bool	check_map_width_len_player(int len, int width, char player_dir)
 	return (res);
 }
 
-bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
+static bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
 {
 	while (line && line[0] == '\n')
 	{
