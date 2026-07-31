@@ -125,12 +125,14 @@ bool		is_space_accessible(char *prev_line, char *line, int line_num);
 int			get_size_null_term_array(char **array);
 void		free_null_term_array(char **array);
 
+
+
 //init all
 bool		init_mlx(t_game *game);
 bool		init_image(t_game *game);
 bool		init_one_texture(t_game *game, t_texture *texture, char *path);
 bool		init_texture(t_game *game);
-
+char		**get_map_from_file(t_file_info file_info);
 // draw
 void		draw_pixel(t_game *game, int x, int y, int color);
 
