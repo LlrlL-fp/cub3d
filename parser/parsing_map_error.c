@@ -25,7 +25,7 @@ void	error_parsing_map_multi_player(char *param, char *msg,
 		line_num, param, msg, file_info->player.pos_y, file_info->player.pos_x);
 }
 
-void	error_parsing_map_len_width(char *msg)
+void	error_parsing_map_size(char *msg)
 {
 	printf("Error\nParsing failed, Wrong map : %s\n", msg);
 }
@@ -34,4 +34,10 @@ void	error_parsing_map_nl(char *msg, int line_num)
 {
 	printf("Error\nParsing failed, Wrong map -> line %d in map : %s\n",
 		line_num, msg);
+}
+
+void	error_parsing_map_space(char *msg, int line_num, int col_num)
+{
+	printf("Error\nParsing failed, Wrong map -> line %d  col %d in map : %s\n",
+		line_num, col_num, msg);
 }

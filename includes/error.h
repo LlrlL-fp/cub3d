@@ -37,7 +37,8 @@ one character in {N, S, E, W}."
 #define WRONG_MAP_WIDTH "map width must be at least 3."
 #define NO_PLAYER_MAP "there is no player."
 #define NL_IN_MAP_ERROR "New line not allowed in map."
-#define ONE_LINE_ONLY_IN_MAP "contains only one line."
+#define MAP_ONE_LINE "contains only one line."
+#define MAP_SPACE_ACCESSIBLE "a space is accessible!"
 
 void	error_msg(char *msg);
 void	error_parsing(char *param, char *msg);
@@ -50,5 +51,6 @@ void	error_parsing_identifier(char *line, char *param);
 void	error_parsing_map(char *param, char *msg, int line_num);
 void	error_parsing_map_multi_player(char *param, char *msg, int line_num,
 			t_file_info *file_info);
-void	error_parsing_map_len_width(char *msg);
+void	error_parsing_map_size(char *msg);
 void	error_parsing_map_nl(char *msg, int line_num);
+void	error_parsing_map_space(char *msg, int line_num, int col_num);

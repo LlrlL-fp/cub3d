@@ -67,23 +67,24 @@ static bool	check_map_width_len_player(int len, int width, char player_dir)
 	res = true;
 	if (len < 3)
 	{
-		error_parsing_map_len_width(WRONG_MAP_LEN);
+		error_parsing_map_size(WRONG_MAP_LEN);
 		res = false;
 	}
 	if (width < 3)
 	{
-		error_parsing_map_len_width(WRONG_MAP_WIDTH);
+		error_parsing_map_size(WRONG_MAP_WIDTH);
 		res = false;
 	}
 	if (!player_dir)
 	{
-		error_parsing_map_len_width(NO_PLAYER_MAP);
+		error_parsing_map_size(NO_PLAYER_MAP);
 		res = false;
 	}
 	return (res);
 }
 
-static bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
+static bool	get_and_check_first_line(char *line, int fd, t_file_info *file_info,
+		char **prev_line)
 {
 	while (line && line[0] == '\n')
 	{
@@ -96,6 +97,9 @@ static bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
 		if (!check_first_last_line(line, file_info))
 			return (free(line), false);
 		file_info->map_width++;
+		*prev_line = ft_strdup(line);
+		if (! *prev_line)
+			return (error_parsing(line, MALLOC_FAILED), free(line), false);
 		free(line);
 		return (true);
 	}
@@ -105,28 +109,29 @@ static bool get_and_check_first_line(char *line, int fd, t_file_info *file_info)
 
 bool	check_map(char *line, int fd, t_file_info *file_info)
 {
-	char	*previous_line;
+	char	*prev_line;
 
-	previous_line = NULL;
-	if (!get_and_check_first_line(line, fd, file_info))
+	prev_line = NULL;
+	if (!get_and_check_first_line(line, fd, file_info, &prev_line))
 		return (false);
 	line = get_next_line(fd);
 	if (!line)
-		return (error_parsing_map_len_width(ONE_LINE_ONLY_IN_MAP), false);
+		return (free(prev_line), error_parsing_map_size(MAP_ONE_LINE), false);
 	while (line)
 	{
-		free(previous_line);
-		previous_line = ft_strdup(line);
-		if (! previous_line)
+		if (!is_valid_middle_line(line, file_info)
+			|| !is_space_accessible(prev_line, line, file_info->map_width))
+			return (free(prev_line), free(line), false);
+		free(prev_line);
+		prev_line = ft_strdup(line);
+		if (! prev_line)
 			return (error_parsing(line, MALLOC_FAILED), free(line), false);
-		if (!is_valid_middle_line(line, file_info))
-			return (free(previous_line), free(line), false);
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (!check_first_last_line(previous_line, file_info))
-		return (free(line), free(previous_line), false);
-	return (free(line), free(previous_line),
+	if (!check_first_last_line(prev_line, file_info))
+		return (free(line), free(prev_line), false);
+	return (free(line), free(prev_line),
 		check_map_width_len_player(file_info->map_len, file_info->map_width,
 			file_info->player.dir));
 }

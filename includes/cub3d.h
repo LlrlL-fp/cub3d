@@ -110,6 +110,7 @@ bool		is_already_present(char c, t_file_info *file_info);
 bool		is_player_dir(char c);
 bool		is_valid_map_car(char c);
 int			max(int a, int b);
+int			min(int a, int b);
 int			get_line_len_without_nl(char *line);
 
 //check floor_ceiling
@@ -118,6 +119,7 @@ bool		check_floor_ceiling(char *color, char *line);
 
 //check map
 bool		check_map(char *line, int fd, t_file_info *file_info);
+bool		is_space_accessible(char *prev_line, char *line, int line_num);
 
 //utils null terminating array
 int			get_size_null_term_array(char **array);
@@ -136,7 +138,6 @@ void		draw_pixel(t_game *game, int x, int y, int color);
 void		destroy_texture(t_game *game);
 int			exit_game(t_game *game);
 
-
 //event
 int			key_handler(int keycode, t_game *game);
 void		move_forward(t_game *game);
@@ -146,13 +147,5 @@ void		move_right(t_game *game);
 void		rotate_left(t_game *game);
 void		rotate_right(t_game *game);
 int			key_handler(int keycode, t_game *game);
-
-
-
-
-
-
-
-
 
 #endif
