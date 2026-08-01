@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/30 00:28:57 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/01 19:10:25 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_file_info
 	char		*east_path;
 	char		*floor_color;
 	char		*ceiling_color;
+	int			ceiling_rgb;
+	int			floor_rgb;
 	int			map_starting_pos;
 	int			map_len;
 	int			map_width;
@@ -116,6 +118,8 @@ int			get_line_len_without_nl(char *line);
 //check floor_ceiling
 bool		is_floor_or_ceiling(char *c);
 bool		check_floor_ceiling(char *color, char *line);
+int			color_to_rgb(char *color);
+
 
 //check map
 bool		check_map(char *line, int fd, t_file_info *file_info);
@@ -126,15 +130,19 @@ int			get_size_null_term_array(char **array);
 void		free_null_term_array(char **array);
 
 
-
 //init all
 bool		init_mlx(t_game *game);
 bool		init_image(t_game *game);
 bool		init_one_texture(t_game *game, t_texture *texture, char *path);
 bool		init_texture(t_game *game);
 char		**get_map_from_file(t_file_info file_info);
+
 // draw
 void		draw_pixel(t_game *game, int x, int y, int color);
+void		draw_background(t_game *game);
+
+// render
+void		render_frame(t_game *game);
 
 //cleanup
 void		destroy_texture(t_game *game);

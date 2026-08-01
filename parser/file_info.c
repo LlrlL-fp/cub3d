@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   file_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
+/*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 13:18:08 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/26 13:18:11 by malmany          ###   ########.fr       */
+/*   Updated: 2026/08/01 17:29:14 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include "../includes/error.h"
 
@@ -24,6 +25,8 @@ t_file_info	new_file_info(void)
 	res.east_path = NULL;
 	res.floor_color = NULL;
 	res.ceiling_color = NULL;
+	res.ceiling_rgb = 0;
+	res.floor_rgb = 0;
 	res.map_starting_pos = 0;
 	res.map_len = -1;
 	res.map_width = 0;
@@ -44,9 +47,15 @@ bool	set_info_in_file_info(t_file_info *f_inf, char type_info,
 	else if (type_info == 'E')
 		f_inf->east_path = info;
 	else if (type_info == 'F')
+	{
 		f_inf->floor_color = info;
+		f_inf->floor_rgb = color_to_rgb(info);
+	}
 	else if (type_info == 'C')
+	{
 		f_inf->ceiling_color = info;
+		f_inf->ceiling_rgb = color_to_rgb(info);
+	}
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 00:15:08 by lren              #+#    #+#             */
-/*   Updated: 2026/07/30 00:15:28 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/01 19:16:17 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,28 @@ void	draw_pixel(t_game *game, int x, int y, int color)
 			+ x * (game->frame_bpp / 8));
 	*pixel = color;
 }
+
+void	draw_background(t_game *game)
+{
+	int	y;
+	int	x;
+
+	if (!game || !game->frame_addr)
+		return ;
+	y = 0;
+	while (y < WIN_HEIGHT)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			if (y < WIN_HEIGHT / 2)
+				draw_pixel(game, x, y, game->file.ceiling_rgb);
+			else
+				draw_pixel(game, x, y, game->file.floor_rgb);
+			x++;
+		}
+		y++;
+	}
+}
+
+

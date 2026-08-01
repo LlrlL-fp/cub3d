@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/25 17:42:27 by lren              #+#    #+#             */
-/*   Updated: 2026/07/29 00:16:38 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/01 19:13:19 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int	key_handler(int keycode, t_game *game)
 	return (0);
 }
 
-
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -88,6 +86,7 @@ int	main(int argc, char **argv)
 	game.frame_addr = NULL;
 	if (!init_mlx(&game) || !init_image(&game))
 		exit_game(&game);
+	render_frame(&game);
 	mlx_key_hook(game.win, key_handler, &game);
 	mlx_hook(game.win, EVENT_DESTROY, 0, exit_game, &game);
 	mlx_loop(game.mlx);
