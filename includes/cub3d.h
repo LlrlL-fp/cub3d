@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/01 19:10:25 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/02 19:26:55 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ typedef struct s_texture
 	int		height;
 }	t_texture;
 
+typedef struct s_ray
+{
+	int		draw_start;
+	int		draw_end;
+	int		color;
+	int		x;
+}	t_ray;
 typedef struct s_game
 {
 	void		*mlx;
@@ -87,6 +94,7 @@ typedef struct s_game
 	t_texture	so;
 	t_texture	ea;
 	t_texture	we;
+	t_ray		ray;
 }	t_game;
 
 //player
@@ -140,6 +148,10 @@ char		**get_map_from_file(t_file_info file_info);
 // draw
 void		draw_pixel(t_game *game, int x, int y, int color);
 void		draw_background(t_game *game);
+void		draw_wall(t_game *game, t_ray	ray);
+
+// ray
+t_ray		new_ray(void);
 
 // render
 void		render_frame(t_game *game);

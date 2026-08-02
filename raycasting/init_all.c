@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 14:46:17 by lren              #+#    #+#             */
-/*   Updated: 2026/07/28 20:25:22 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/02 19:13:26 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ bool	init_texture(t_game *game)
 		return (false);
 	return (true);
 }
+
+
 
 /*bool	init_player(t_game *game, int x, int y, char dir)
 {

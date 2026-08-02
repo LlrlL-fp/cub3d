@@ -1,25 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   raycasting_calculate.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 18:46:31 by lren              #+#    #+#             */
-/*   Updated: 2026/08/02 19:49:18 by lren             ###   ########.fr       */
+/*   Created: 2026/08/02 19:38:31 by lren              #+#    #+#             */
+/*   Updated: 2026/08/02 19:38:45 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	render_frame(t_game *game)
-{
-	int	x;
-
-	draw_background(game);
-	// raycasting
-	mlx_put_image_to_window(game->mlx, game->win, game->frame_image, 0, 0);
-}
-/*int	mlx_put_image_to_window(void *mlx_ptr,void *win_ptr,
-		void *img_ptr,int x, int y);
-*/

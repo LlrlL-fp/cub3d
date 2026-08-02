@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malmany <malmany@learner.42.tech>          +#+  +:+       +#+        */
+/*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/07/24 13:24:03 by malmany          ###   ########.fr       */
+/*   Updated: 2026/08/02 19:19:12 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "includes/cub3d.h"
+
 #include "includes/error.h"
 #include "get_next_line/get_next_line.h"
+#include "../includes/cub3d.h"
 
-void print_map(char **map, int size)
+void	print_map(char **map, int size)
 {
 	int	i;
 
-	if(!map)
-		return;
+	if (!map)
+		return ;
 	i = 0;
-	while(i < size)
+	while (i < size)
 	{
 		printf("%s\n", map[i]);
 		i++;
@@ -30,7 +31,7 @@ void print_map(char **map, int size)
 int	main(int argc, char **argv)
 {
 	t_file_info	file_info;
-	char	**map;
+	char		**map;
 
 	if (argc != 2)
 		return (error_msg(WRONG_NB_ARGUMENT), 1);
@@ -39,6 +40,27 @@ int	main(int argc, char **argv)
 	printf("%d len and %d width\n", file_info.map_len, file_info.map_width);
 	print_map(map, file_info.map_width);
 	clean_file_info(&file_info);
+	return (0);
+}
+
+
+int	main(int argc, char **argv)
+{
+	t_game	game;
+
+	(void)argc;
+	(void)argv;
+	game.mlx = NULL;
+	game.win = NULL;
+	game.frame_image = NULL;
+	game.frame_addr = NULL;
+	game.ray = new_ray();
+	if (!init_mlx(&game) || !init_image(&game))
+		exit_game(&game);
+	render_frame(&game);
+	mlx_key_hook(game.win, key_handler, &game);
+	mlx_hook(game.win, EVENT_DESTROY, 0, exit_game, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }
 

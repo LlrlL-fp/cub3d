@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/01 18:46:31 by lren              #+#    #+#             */
-/*   Updated: 2026/08/02 19:49:18 by lren             ###   ########.fr       */
+/*   Created: 2026/08/02 19:13:02 by lren              #+#    #+#             */
+/*   Updated: 2026/08/02 19:17:10 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	render_frame(t_game *game)
+t_ray	new_ray(void)
 {
-	int	x;
+	t_ray	ray;
 
-	draw_background(game);
-	// raycasting
-	mlx_put_image_to_window(game->mlx, game->win, game->frame_image, 0, 0);
+	ray.x = 0;
+	ray.draw_start = 0;
+	ray.draw_end = 0;
+	ray.color = 0;
+	return (ray);
 }
-/*int	mlx_put_image_to_window(void *mlx_ptr,void *win_ptr,
-		void *img_ptr,int x, int y);
-*/

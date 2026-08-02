@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 00:15:08 by lren              #+#    #+#             */
-/*   Updated: 2026/08/01 19:16:17 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/02 19:26:24 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void	draw_background(t_game *game)
 	}
 }
 
+void	draw_wall(t_game *game, t_ray	ray)
+{
+	int	y;
 
+	y = ray.draw_start;
+	while (y <= ray.draw_end)
+	{
+		draw_pixel(game, ray.x, y, ray.color);
+		y++;
+	}
+}
