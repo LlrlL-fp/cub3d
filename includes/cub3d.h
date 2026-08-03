@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/02 19:26:55 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/03 19:54:18 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ typedef struct s_player
 	int		pos_x;
 	int		pos_y;
 	char	dir;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }	t_player;
 
 typedef struct s_file_info
@@ -78,6 +82,12 @@ typedef struct s_ray
 	int		draw_end;
 	int		color;
 	int		x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
 }	t_ray;
 typedef struct s_game
 {
@@ -95,6 +105,7 @@ typedef struct s_game
 	t_texture	ea;
 	t_texture	we;
 	t_ray		ray;
+	t_player	player;
 }	t_game;
 
 //player
@@ -169,5 +180,11 @@ void		move_right(t_game *game);
 void		rotate_left(t_game *game);
 void		rotate_right(t_game *game);
 int			key_handler(int keycode, t_game *game);
+
+//raycasting_calculate
+double		calculate_camera_x(int x);
+void		calculate_ray_dir(t_game *game, double camera_x);
+void		calculate_delta_dist(t_game *game);
+void		calculate_step(t_game *game);
 
 #endif
