@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/03 19:54:18 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/05 20:17:40 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@
 //y = ligne, x = colonne
 typedef struct s_player
 {
-	int		pos_x;
-	int		pos_y;
-	char	dir;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
+	double		pos_x; // peut etre d'avoir 0,3 etc (au lieu de int)
+	double		pos_y; // peut etre d'avoir 0,3 etc (au lieu de int)
+	char		dir;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
 }	t_player;
 
 typedef struct s_file_info
@@ -88,6 +88,9 @@ typedef struct s_ray
 	double	delta_dist_y;
 	int		step_x;
 	int		step_y;
+	int		side_dist_x;
+	int		side_dist_y;
+	int		side;
 }	t_ray;
 typedef struct s_game
 {
@@ -185,6 +188,9 @@ int			key_handler(int keycode, t_game *game);
 double		calculate_camera_x(int x);
 void		calculate_ray_dir(t_game *game, double camera_x);
 void		calculate_delta_dist(t_game *game);
-void		calculate_step(t_game *game);
+void		calculate_step_sidedist_x(t_game *game);
+void		calculate_step_sidedist_y(t_game *game);
+void		perform_dda(t_game *game);
+void		raycasting(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 19:38:31 by lren              #+#    #+#             */
-/*   Updated: 2026/08/03 19:53:49 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/05 17:22:29 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,50 @@ void	calculate_delta_dist(t_game *game)
 		game->ray.delta_dist_y = fabs(1 / game->ray.ray_dir_y);
 }
 
-void	calculate_step(t_game *game)
+void	calculate_step_sidedist_x(t_game *game)
 {
+	int		map_x;
+
+	map_x = (int)game->player.pos_x;
 	if (game->ray.ray_dir_x < 0)
+	{
 		game->ray.step_x = -1;
+		game->ray.side_dist_x = (game->player.pos_x - map_x)
+			* game->ray.delta_dist_x;
+	}
 	else
+	{
 		game->ray.step_x = 1;
-	if (game->ray.ray_dir_y < 0)
-		game->ray.step_y = -1;
-	else
-		game->ray.step_y = 1;
+		game->ray.side_dist_x = (map_x + 1.0 - game->player.pos_x)
+			* game->ray.delta_dist_x;
+	}
 }
+
+void	calculate_step_sidedist_y(t_game *game)
+{
+	int		map_y;
+
+	map_y = (int)game->player.pos_y;
+	if (game->ray.ray_dir_y < 0)
+	{
+		game->ray.step_y = -1;
+		game->ray.side_dist_y = (game->player.pos_y - map_y)
+			* game->ray.delta_dist_y;
+	}
+	else
+	{
+		game->ray.step_y = 1;
+		game->ray.side_dist_y = (map_y + 1.0 - game->player.pos_y)
+			* game->ray.delta_dist_y;
+	}
+}
+
 
 /*fabs() : prendre la valeur absolue d’un nombre flottant 
 		(supprimer le signe négatif). = rendre un nombre positif;
 	ex: fabs(-5.5) = 5.5
 	1e30 = 1 × 10³⁰ 
 */
-
-
-
-
-
-
 
 /*calculate_camera_x()
 ↓

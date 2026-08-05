@@ -8,6 +8,12 @@ SRC = parser/check_cub_file.c get_next_line/get_next_line_utils.c get_next_line/
 	  parser/check_floor_ceiling.c parser/parsing_error.c parser/parsing_error2.c               \
 	  parser/parsing_utils2.c parser/file_info.c parser/player.c parser/parsing_map_error.c     \
 	  parser/parsing_map_utils.c parser/check_map_utils.c parser/map.c
+	  src/raycasting/draw.c \
+	  src/raycasting/event.c \
+	  src/raycasting/init_all.c \
+	  src/raycasting/ray.c \
+	  src/raycasting/raycasting_calculate.c \
+	  src/raycasting/raycasting.c
 
 INCLUDE = libft/libft.h includes/cub3d.h includes/error.h 
 
