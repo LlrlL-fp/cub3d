@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 00:15:08 by lren              #+#    #+#             */
-/*   Updated: 2026/08/02 19:26:24 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/06 17:21:34 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,26 @@ void	draw_background(t_game *game)
 	}
 }
 
-void	draw_wall(t_game *game, t_ray	ray)
+static void	calculate_draw_start_end(t_game *game)
+{
+	game->ray.draw_start = -game->ray.line_height / 2 + WIN_HEIGHT / 2;
+	game->ray.draw_end = game->ray.line_height / 2 + WIN_HEIGHT / 2;
+	if (game->ray.draw_start < 0)
+		game->ray.draw_start = 0;
+	if (game->ray.draw_end >= WIN_HEIGHT)
+		game->ray.draw_end = WIN_HEIGHT - 1;
+}
+
+void	draw_wall(t_game *game)
 {
 	int	y;
 
-	y = ray.draw_start;
-	while (y <= ray.draw_end)
+	calculate_draw_start_end(game);
+	y = game->ray.draw_start;
+	while (y <= game->ray.draw_end)
 	{
-		draw_pixel(game, ray.x, y, ray.color);
+		draw_pixel(game, game->ray.x, y, game->ray.color);
 		y++;
 	}
 }
+

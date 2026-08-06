@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/05 20:17:40 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/06 17:27:29 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_ray
 	int		side_dist_x;
 	int		side_dist_y;
 	int		side;
+	double	perp_wall_dist;
+	int		line_height;
 }	t_ray;
 typedef struct s_game
 {
@@ -162,7 +164,7 @@ char		**get_map_from_file(t_file_info file_info);
 // draw
 void		draw_pixel(t_game *game, int x, int y, int color);
 void		draw_background(t_game *game);
-void		draw_wall(t_game *game, t_ray	ray);
+void		draw_wall(t_game *game);
 
 // ray
 t_ray		new_ray(void);
@@ -191,6 +193,8 @@ void		calculate_delta_dist(t_game *game);
 void		calculate_step_sidedist_x(t_game *game);
 void		calculate_step_sidedist_y(t_game *game);
 void		perform_dda(t_game *game);
+void		perp_wall_dist(t_game *game);
+void		calculate_wall_height(t_game *game);
 void		raycasting(t_game *game);
 
 #endif

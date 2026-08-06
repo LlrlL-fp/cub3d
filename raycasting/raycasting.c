@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 13:54:24 by lren              #+#    #+#             */
-/*   Updated: 2026/08/05 20:14:20 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/06 17:20:11 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ void	perform_dda(t_game *game)
 	}
 }
 
+void	perp_wall_dist(t_game *game)
+{
+	if (game->ray.side == 0)
+		game->ray.perp_wall_dist = game->ray.side_dist_x
+			- game->ray.delta_dist_x;
+	else
+		game->ray.perp_wall_dist = game->ray.side_dist_y
+			- game->ray.delta_dist_y;
+}
+
+void	calculate_wall_height(t_game *game)
+{
+	game->ray.line_height = (int)(WIN_HEIGHT / game->ray.perp_wall_dist);
+}
+
 void	raycasting(t_game *game)
 {
 	int		x;
@@ -55,9 +70,13 @@ void	raycasting(t_game *game)
 		calculate_step_sidedist_x(game);
 		calculate_step_sidedist_y(game);
 		perform_dda(game);
+		perp_wall_dist(game);
+		calculate_wall_height(game);
+		draw_wall(game);
 		x++;
 	}
 }
+
 //side = 0 : le rayon touche un côté vertical (axe x).
 //side = 1 : le rayon touche un côté horizontal (axe y)
 
