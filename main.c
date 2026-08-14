@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/02 19:19:12 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/14 19:38:49 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_map(char **map, int size)
 	}
 }
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	t_file_info	file_info;
 	char		**map;
@@ -43,13 +43,16 @@ int	main(int argc, char **argv)
 	printf("valu rot in radins %f\n", ROT_ANGLE_RADIAN);
 	return (0);
 }
+*/
 
-/*int	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	(void)argc;
-	(void)argv;
+	if (argc != 2)
+		return (error_msg(WRONG_NB_ARGUMENT), 1);
+	game.file = check_cub_file(argv[1]);
+	game.map = get_map_from_file(game.file);
 	game.mlx = NULL;
 	game.win = NULL;
 	game.frame_image = NULL;
@@ -62,4 +65,4 @@ int	main(int argc, char **argv)
 	mlx_hook(game.win, EVENT_DESTROY, 0, exit_game, &game);
 	mlx_loop(game.mlx);
 	return (0);
-}*/
+}

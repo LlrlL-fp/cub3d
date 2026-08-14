@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 00:15:08 by lren              #+#    #+#             */
-/*   Updated: 2026/08/06 17:21:34 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/14 19:03:48 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	draw_wall(t_game *game)
 {
 	int	y;
 
+	game->ray.color = 0xFFFFFF;
 	calculate_draw_start_end(game);
 	y = game->ray.draw_start;
 	while (y <= game->ray.draw_end)
