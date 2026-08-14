@@ -51,7 +51,7 @@ void	move_backward(t_game *game)
  *  pour aller a gauche ou droite, faut un vecteur perpendiculaire a dir
  * deux vecteurs perpendiculaires si produit scalaire null
  * produit scalaire A . B = AxBx + AyBy
- * (dirx, diry), pour A : (diry,-dirx) et pour B : (-diry, dirx)
+ * (dirx, diry), pour gauche : (diry,-dirx) et pour droite : (-diry, dirx)
  * car ex pour (1, 0) -> (0, -1) est a gauch et (0, 1) est a droite
 **/
 
