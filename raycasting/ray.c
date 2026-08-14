@@ -22,4 +22,3 @@ t_ray	new_ray(void)
 	ray.color = 0;
 	return (ray);
 }
-

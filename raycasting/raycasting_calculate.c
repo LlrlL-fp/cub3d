@@ -29,7 +29,6 @@ void	calculate_delta_dist(t_game *game)
 		game->ray.delta_dist_x = 1e30;
 	else
 		game->ray.delta_dist_x = fabs(1 / game->ray.ray_dir_x);
-
 	if (game->ray.ray_dir_y == 0)
 		game->ray.delta_dist_y = 1e30;
 	else
@@ -73,7 +72,6 @@ void	calculate_step_sidedist_y(t_game *game)
 			* game->ray.delta_dist_y;
 	}
 }
-
 
 /*fabs() : prendre la valeur absolue d’un nombre flottant 
 		(supprimer le signe négatif). = rendre un nombre positif;

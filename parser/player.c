@@ -21,9 +21,43 @@ t_player	new_player(void)
 	return (res);
 }
 
+/**
+ * 		  N
+       -1 ↑
+          |
+          |
+O <------P------> E
+ -1       |     1
+          |
+          ↓ 1
+          S 
+ **/
+
+
+
 void	set_player(t_file_info *file_info, char dir, int pos_x, int pos_y)
 {
 	file_info->player.dir = dir;
 	file_info->player.pos_x = pos_x;
 	file_info->player.pos_y = pos_y;
+	if (dir == 'N')
+	{
+		file_info->player.dir_x = 0;
+		file_info->player.dir_y = -1;
+	}
+	else if (dir == 'S')
+	{
+		file_info->player.dir_x = 0;
+		file_info->player.dir_y = 1;
+	}
+	else if (dir == 'O')
+	{
+		file_info->player.dir_x = -1;
+		file_info->player.dir_y = 0;
+	}
+	else if (dir == 'E')
+	{
+		file_info->player.dir_x = 1;
+		file_info->player.dir_y = 0;
+	}
 }

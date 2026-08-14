@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include <math.h>
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 500
@@ -34,6 +35,11 @@
 # define KEY_ESC    65307
 
 # define EVENT_DESTROY 17
+
+# define MOVE_SPEED		0.05
+//180 degres = PI en radians, on a besoin en radian pour cos et sin
+// pi = 3.14159265, pi/2 = 1.570796
+# define ROT_ANGLE_RADIAN 1.570796
 
 //y = ligne, x = colonne
 typedef struct s_player
@@ -144,7 +150,6 @@ bool		is_floor_or_ceiling(char *c);
 bool		check_floor_ceiling(char *color, char *line);
 int			color_to_rgb(char *color);
 
-
 //check map
 bool		check_map(char *line, int fd, t_file_info *file_info);
 bool		is_space_accessible(char *prev_line, char *line, int line_num);
@@ -152,7 +157,6 @@ bool		is_space_accessible(char *prev_line, char *line, int line_num);
 //utils null terminating array
 int			get_size_null_term_array(char **array);
 void		free_null_term_array(char **array);
-
 
 //init all
 bool		init_mlx(t_game *game);
@@ -182,8 +186,7 @@ void		move_forward(t_game *game);
 void		move_backward(t_game *game);
 void		move_left(t_game *game);
 void		move_right(t_game *game);
-void		rotate_left(t_game *game);
-void		rotate_right(t_game *game);
+void		rotate(t_game *game, double angle, char side);
 int			key_handler(int keycode, t_game *game);
 
 //raycasting_calculate

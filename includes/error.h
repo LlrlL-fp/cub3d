@@ -9,6 +9,7 @@
 /*   Updated: 2026/07/24 13:45:24 by malmany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "cub3d.h"
 
 #define WRONG_NB_ARGUMENT "Must have one argument : the *.cub file name"
 #define EXTENSION_ERROR ".cub extension file name required."

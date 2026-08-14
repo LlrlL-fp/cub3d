@@ -71,4 +71,3 @@ void	draw_wall(t_game *game)
 		y++;
 	}
 }
-

@@ -22,7 +22,8 @@ void	error_parsing_map_multi_player(char *param, char *msg,
 {
 	printf("Error\nParsing failed, Wrong map, line \
 %d in map -> %s : %s, A player was already present in line %d col %d\n",
-		line_num, param, msg, file_info->player.pos_y, file_info->player.pos_x);
+		line_num, param, msg, (int)file_info->player.pos_y,
+		(int)file_info->player.pos_x);
 }
 
 void	error_parsing_map_size(char *msg)

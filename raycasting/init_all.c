@@ -67,8 +67,6 @@ bool	init_texture(t_game *game)
 	return (true);
 }
 
-
-
 /*bool	init_player(t_game *game, int x, int y, char dir)
 {
 	if (!game || !ft_strchr("NSEW", dir))

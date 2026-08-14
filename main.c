@@ -12,7 +12,7 @@
 
 #include "includes/error.h"
 #include "get_next_line/get_next_line.h"
-#include "../includes/cub3d.h"
+#include "includes/cub3d.h"
 
 void	print_map(char **map, int size)
 {
@@ -40,11 +40,11 @@ int	main(int argc, char **argv)
 	printf("%d len and %d width\n", file_info.map_len, file_info.map_width);
 	print_map(map, file_info.map_width);
 	clean_file_info(&file_info);
+	printf("valu rot in radins %f\n", ROT_ANGLE_RADIAN);
 	return (0);
 }
 
-
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	t_game	game;
 
@@ -62,5 +62,4 @@ int	main(int argc, char **argv)
 	mlx_hook(game.win, EVENT_DESTROY, 0, exit_game, &game);
 	mlx_loop(game.mlx);
 	return (0);
-}
-
+}*/
