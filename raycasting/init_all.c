@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/26 14:46:17 by lren              #+#    #+#             */
-/*   Updated: 2026/08/02 19:13:26 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/15 15:27:33 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	init_texture(t_game *game)
 }
 
 bool	init_texture()
-/*
+
 
 //void	*mlx_init(void);
 //void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
@@ -87,7 +87,7 @@ bool	init_texture()
 //char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
  int *size_line,int *endian)
 
-/*1。init_mlx()
+1。init_mlx()
 
 2。 init_image()
 
