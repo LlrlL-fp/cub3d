@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/15 18:21:19 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/15 19:28:46 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ typedef struct s_ray
 	double	delta_dist_y;
 	int		step_x;
 	int		step_y;
-	int		side_dist_x;
-	int		side_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
 	int		side;
 	double	perp_wall_dist;
 	int		line_height;
@@ -177,7 +177,7 @@ void		draw_wall(t_game *game);
 t_ray		new_ray(void);
 
 // render
-int		render_frame(t_game *game);
+int			render_frame(t_game *game);
 
 //cleanup
 void		destroy_texture(t_game *game);

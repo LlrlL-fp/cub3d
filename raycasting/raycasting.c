@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/02 13:54:24 by lren              #+#    #+#             */
-/*   Updated: 2026/08/06 17:20:11 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/15 19:54:08 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ void	raycasting(t_game *game)
 	double	camera_x;
 
 	x = 0;
+	printf("pos=(%f,%f) dir=(%f%f) plane=(%f%f)\n",game->player.pos_x,game->player.pos_y,game->player.dir_x,game->player.dir_y,game->player.plane_x,game->player.plane_y);
 	while (x < WIN_WIDTH)
 	{
 		game->ray.x = x;
+		//printf("x = %d\n", x);
 		camera_x = calculate_camera_x(x);
 		calculate_ray_dir(game, camera_x);
 		calculate_delta_dist(game);
@@ -72,6 +74,7 @@ void	raycasting(t_game *game)
 		perform_dda(game);
 		perp_wall_dist(game);
 		calculate_wall_height(game);
+		//printf("side = %d dist =%f height=%d\n",game->ray.side, game->ray.perp_wall_dist,game->ray.line_height);
 		draw_wall(game);
 		x++;
 	}

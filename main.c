@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 13:24:00 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/15 17:35:56 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/15 19:52:51 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int argc, char **argv)
 	game.frame_image = NULL;
 	game.frame_addr = NULL;
 	game.ray = new_ray();
+	game.player = game.file.player;
 	if (!init_mlx(&game) || !init_image(&game))
 		exit_game(&game);
 	render_frame(&game);
