@@ -6,7 +6,7 @@
 /*   By: lren <lren@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/20 18:23:30 by malmany           #+#    #+#             */
-/*   Updated: 2026/08/14 20:24:35 by lren             ###   ########.fr       */
+/*   Updated: 2026/08/15 18:21:19 by lren             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define CUB3D_H
 
 # include "mlx.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -175,13 +177,14 @@ void		draw_wall(t_game *game);
 t_ray		new_ray(void);
 
 // render
-void		render_frame(t_game *game);
+int		render_frame(t_game *game);
 
 //cleanup
 void		destroy_texture(t_game *game);
 int			exit_game(t_game *game);
 
 //event
+void		events_init(t_game *game);
 int			key_handler(int keycode, t_game *game);
 void		move_forward(t_game *game);
 void		move_backward(t_game *game);
