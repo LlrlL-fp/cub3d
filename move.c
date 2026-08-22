@@ -14,7 +14,11 @@
 
 static void	set_player_pos(t_game *game, double new_posx, double new_posy)
 {
-	if (game->map[(int)new_posy][(int)new_posx] != '1')
+	if ((int)new_posx < 0 || (int)new_posx >= game->file.map_len
+		|| (int)new_posy < 0 || (int)new_posy >= game->file.map_width)
+		return ;
+	if (game->map[(int)new_posy][(int)new_posx] != '1'
+		&& game->map[(int)new_posy][(int)new_posx] != ' ')
 	{
 		game->player.pos_x = new_posx;
 		game->player.pos_y = new_posy;
@@ -27,7 +31,7 @@ void	move_forward(t_game *game)
 	double	new_posx;
 	double	new_posy;
 
-	if (! game)
+	if (!game)
 		return ;
 	new_posx = game->player.pos_x + game->player.dir_x * MOVE_SPEED;
 	new_posy = game->player.pos_y + game->player.dir_y * MOVE_SPEED;

@@ -30,7 +30,7 @@
  *  angle negative pour rotation gauche
 **/
 
-void	rotate_vector(double *x, double *y, double angle)
+static void	rotate_vector(double *x, double *y, double angle)
 {
 	double	old_x;
 

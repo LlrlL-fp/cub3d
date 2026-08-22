@@ -33,21 +33,6 @@ static char	*read_map_start(int fd, int starting_pos)
 	return (line);
 }
 
-void	free_map(int size, char **map)
-{
-	int	i;
-
-	if (!map)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-}
-
 static void	fill_map_row_with_space(char *row, int map_len, int line_len)
 {
 	int	i;
@@ -61,27 +46,19 @@ static void	fill_map_row_with_space(char *row, int map_len, int line_len)
 	row[i] = '\0';
 }
 
-char	**get_map_from_file(t_file_info file_info)
+static char	**read_map_rows(t_file_info file_info, int fd, char **map)
 {
-	char	**map;
-	int		fd;
-	int		i;
 	char	*line;
+	int		i;
 	int		line_len;
 
 	i = 0;
-	fd = open(file_info.filename, O_RDONLY);
-	if (fd < 0)
-		return (error_parsing(file_info.filename, FILE_OPENING_ERROR), NULL);
-	map = malloc(file_info.map_width * sizeof(char *));
-	if (!map)
-		return (close(fd), error_msg(MALLOC_FAILED), NULL);
 	line = read_map_start(fd, file_info.map_starting_pos);
 	while (i < file_info.map_width && line)
 	{
 		map[i] = malloc(file_info.map_len + 1);
-		if (! map[i])
-			return (free_map(i, map), free(line),
+		if (!map[i])
+			return (free_map(i, map), free(line), close(fd),
 				error_msg(MALLOC_FAILED), NULL);
 		line_len = get_line_len_without_nl(line);
 		ft_strlcpy(map[i], line, line_len + 1);
@@ -94,7 +71,34 @@ char	**get_map_from_file(t_file_info file_info)
 	if (i < file_info.map_width)
 		return (close(fd), free(line), free_map(i, map),
 			error_msg(MALLOC_FAILED), NULL);
-	close(fd);
-	free(line);
-	return (map);
+	return (close(fd), free(line), map);
+}
+
+char	**get_map_from_file(t_file_info file_info)
+{
+	char	**map;
+	int		fd;
+
+	fd = open(file_info.filename, O_RDONLY);
+	if (fd < 0)
+		return (error_parsing(file_info.filename, FILE_OPENING_ERROR), NULL);
+	map = malloc(file_info.map_width * sizeof(char *));
+	if (!map)
+		return (close(fd), error_msg(MALLOC_FAILED), NULL);
+	return (read_map_rows(file_info, fd, map));
+}
+
+void	free_map(int size, char **map)
+{
+	int	i;
+
+	if (!map)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
 }

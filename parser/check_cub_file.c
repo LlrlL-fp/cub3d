@@ -98,6 +98,8 @@ static bool	check_line(char *line, int *nb_l_valid, t_file_info *file_info)
 	if (line[line_len - 1] == '\n')
 		line[line_len - 1] = '\0';
 	line_split = ft_split(line, ' ');
+	if (!line_split)
+		return (error_parsing(line, MALLOC_FAILED), false);
 	if (is_texture(line_split[0]) || is_floor_or_ceiling(line_split[0]))
 	{
 		if (!handle_textures_f_c(line_split, line, file_info))

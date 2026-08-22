@@ -23,8 +23,6 @@ t_file_info	new_file_info(void)
 	res.south_path = NULL;
 	res.west_path = NULL;
 	res.east_path = NULL;
-	res.floor_color = NULL;
-	res.ceiling_color = NULL;
 	res.ceiling_rgb = 0;
 	res.floor_rgb = 0;
 	res.map_starting_pos = 0;
@@ -47,15 +45,9 @@ bool	set_info_in_file_info(t_file_info *f_inf, char type_info,
 	else if (type_info == 'E')
 		f_inf->east_path = info;
 	else if (type_info == 'F')
-	{
-		f_inf->floor_color = info;
 		f_inf->floor_rgb = color_to_rgb(info);
-	}
 	else if (type_info == 'C')
-	{
-		f_inf->ceiling_color = info;
 		f_inf->ceiling_rgb = color_to_rgb(info);
-	}
 	return (true);
 }
 
@@ -73,6 +65,4 @@ void	clean_file_info(t_file_info *f_inf)
 	free(f_inf->south_path);
 	free(f_inf->west_path);
 	free(f_inf->east_path);
-	free(f_inf->floor_color);
-	free(f_inf->ceiling_color);
 }

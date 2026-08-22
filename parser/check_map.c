@@ -54,7 +54,7 @@ static bool	is_valid_middle_line(char *line, t_file_info *file_info)
 			if (file_info->player.dir)
 				return (error_parsing_map_multi_player(line, MAP_MULTI_PLAYER,
 						(file_info->map_width) + 1, file_info), false);
-			set_player(file_info, line[i], i + 1, (file_info->map_width) + 1);
+			set_player(file_info, line[i], i, file_info->map_width);
 		}
 	}
 	return (set_map_len_with(file_info, len), true);
@@ -120,7 +120,7 @@ bool	check_map(char *line, int fd, t_file_info *file_info)
 	while (line)
 	{
 		if (!is_valid_middle_line(line, file_info)
-			|| !is_space_accessible(prev_line, line, file_info->map_width))
+			|| is_space_accessible(prev_line, line, file_info->map_width))
 			return (free(prev_line), free(line), false);
 		free(prev_line);
 		prev_line = ft_strdup(line);

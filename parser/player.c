@@ -26,6 +26,12 @@ t_player	new_player(void)
 	return (res);
 }
 
+static void	set_player_dir(t_player *player, double dir_x, double dir_y)
+{
+	player->dir_x = dir_x;
+	player->dir_y = dir_y;
+}
+
 /**
  * 		  N
        -1 ↑
@@ -38,39 +44,26 @@ O <------P------> E
           S 
  **/
 
-
-
+/* plane_x and plane_y are used to calculate the camera plane, 
+which is perpendicular to the direction vector (dir_x, dir_y). 
+plane_x = -dir_y * plane_length and plane_y = dir_x * plane_length.
+*/
 void	set_player(t_file_info *file_info, char dir, int pos_x, int pos_y)
 {
+	double	plane_len;
+
+	plane_len = 0.66;
 	file_info->player.dir = dir;
-	file_info->player.pos_x = pos_x;
-	file_info->player.pos_y = pos_y;
+	file_info->player.pos_x = (double)pos_x + 0.5;
+	file_info->player.pos_y = (double)pos_y + 0.5;
 	if (dir == 'N')
-	{
-		file_info->player.dir_x = 0;
-		file_info->player.dir_y = -1;
-		file_info->player.plane_x = 0.66;
-		file_info->player.plane_y = 0;
-	}
+		set_player_dir(&(file_info->player), 0, -1);
 	else if (dir == 'S')
-	{
-		file_info->player.dir_x = 0;
-		file_info->player.dir_y = 1;
-		file_info->player.plane_x = 0.66;
-		file_info->player.plane_y = 0;
-	}
+		set_player_dir(&(file_info->player), 0, 1);
 	else if (dir == 'O')
-	{
-		file_info->player.dir_x = -1;
-		file_info->player.dir_y = 0;
-		file_info->player.plane_x = 0.66;
-		file_info->player.plane_y = 0;
-	}
+		set_player_dir(&(file_info->player), -1, 0);
 	else if (dir == 'E')
-	{
-		file_info->player.dir_x = 1;
-		file_info->player.dir_y = 0;
-		file_info->player.plane_x = 0.66;
-		file_info->player.plane_y = 0;
-	}
+		set_player_dir(&(file_info->player), 1, 0);
+	file_info->player.plane_x = -file_info->player.dir_y * plane_len;
+	file_info->player.plane_y = file_info->player.dir_x * plane_len;
 }

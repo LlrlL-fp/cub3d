@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void	perform_dda(t_game *game)
+static bool	perform_dda(t_game *game)
 {
 	int		hit;
 	int		map_x;
@@ -35,12 +35,16 @@ void	perform_dda(t_game *game)
 			map_y += game->ray.step_y;
 			game->ray.side = 1;
 		}
+		if (map_x < 0 || map_x >= game->file.map_len
+			|| map_y < 0 || map_y >= game->file.map_width)
+			return (false);
 		if (game->map[map_y][map_x] == '1')
 			hit = 1;
 	}
+	return (true);
 }
 
-void	perp_wall_dist(t_game *game)
+static void	perp_wall_dist(t_game *game)
 {
 	if (game->ray.side == 0)
 		game->ray.perp_wall_dist = game->ray.side_dist_x
@@ -50,7 +54,7 @@ void	perp_wall_dist(t_game *game)
 			- game->ray.delta_dist_y;
 }
 
-void	calculate_wall_height(t_game *game)
+static void	calculate_wall_height(t_game *game)
 {
 	game->ray.line_height = (int)(WIN_HEIGHT / game->ray.perp_wall_dist);
 }
@@ -61,20 +65,21 @@ void	raycasting(t_game *game)
 	double	camera_x;
 
 	x = 0;
-	printf("pos=(%f,%f) dir=(%f%f) plane=(%f%f)\n",game->player.pos_x,game->player.pos_y,game->player.dir_x,game->player.dir_y,game->player.plane_x,game->player.plane_y);
 	while (x < WIN_WIDTH)
 	{
 		game->ray.x = x;
-		//printf("x = %d\n", x);
 		camera_x = calculate_camera_x(x);
 		calculate_ray_dir(game, camera_x);
 		calculate_delta_dist(game);
 		calculate_step_sidedist_x(game);
 		calculate_step_sidedist_y(game);
-		perform_dda(game);
+		if (!perform_dda(game))
+		{
+			x++;
+			continue ;
+		}
 		perp_wall_dist(game);
 		calculate_wall_height(game);
-		//printf("side = %d dist =%f height=%d\n",game->ray.side, game->ray.perp_wall_dist,game->ray.line_height);
 		draw_wall(game);
 		x++;
 	}

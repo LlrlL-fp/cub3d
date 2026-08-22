@@ -13,5 +13,11 @@
 
 void	error_msg(char *msg)
 {
-	printf("error\n%s\n", msg);
+	printf("Error\n%s\n", msg);
+}
+
+void	error_init_textures(char *texture, char *texture_path)
+{
+	printf("Error\n%s texture file : %s can't be loaded!\n",
+		texture, texture_path);
 }

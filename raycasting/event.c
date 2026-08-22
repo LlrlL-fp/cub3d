@@ -12,18 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-void	events_init(t_game *game)
-{
-	if (!game)
-		return ;
-	mlx_hook(game->win, KeyPress, KeyPressMask,
-		(int (*)())key_handler, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask,
-		(int (*)())exit_game, game);
-	mlx_loop_hook(game->mlx, (int (*)())render_frame, game);
-}
-
-int	key_handler(int keycode, t_game *game)
+static int	key_handler(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		return (exit_game(game));
@@ -42,8 +31,13 @@ int	key_handler(int keycode, t_game *game)
 	return (0);
 }
 
-
-//t	mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param);
-//int	mlx_hook(void *win_ptr, 
-//int event,int event_mask, int (*funct_ptr)(), void *param);
-//int	mlx_loop(void *mlx_ptr);
+void	events_init(t_game *game)
+{
+	if (!game)
+		return ;
+	mlx_hook(game->win, KeyPress, KeyPressMask,
+		(int (*)())key_handler, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask,
+		(int (*)())exit_game, game);
+	mlx_loop_hook(game->mlx, (int (*)())render_frame, game);
+}

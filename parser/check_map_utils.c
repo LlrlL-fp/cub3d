@@ -32,15 +32,15 @@ bool	is_space_accessible(char *prev_line, char *line, int line_num)
 			if (is_zero_or_dir(prev_line[i - 1])
 				|| is_zero_or_dir(prev_line[i + 1]) || is_zero_or_dir(line[i]))
 				return (error_parsing_map_space(MAP_SPACE_ACCESSIBLE,
-						line_num - 1, i + 1), false);
+						line_num - 1, i + 1), true);
 		}
 		else if (is_zero_or_dir(prev_line[i]))
 		{
 			if (line[i] == ' ')
 				return (error_parsing_map_space(MAP_SPACE_ACCESSIBLE,
-						line_num, i + 1), false);
+						line_num, i + 1), true);
 		}
 		i++;
 	}
-	return (true);
+	return (false);
 }

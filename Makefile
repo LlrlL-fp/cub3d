@@ -24,16 +24,16 @@ OBJ = $(SRC:.c=.o)
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = minilibx-linux/minilibx-linux
+MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
-all: $(LIBFT_LIB) $(NAME)
+all: $(LIBFT_LIB) $(MLX_LIB) $(NAME)
+
+$(MLX_LIB):
+	$(MAKE) -C $(MLX_DIR)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
-
-# $(MLX_LIB):
-#	$(MAKE) -C $(MLX_DIR)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) \
@@ -49,7 +49,8 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT_LIB)
-
+	$(MAKE) -C $(MLX_DIR) clean
+	
 re: fclean all
 
 .PHONY: all clean fclean re

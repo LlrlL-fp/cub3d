@@ -28,6 +28,8 @@ void	destroy_texture(t_game *game)
 
 int	exit_game(t_game *game)
 {
+	clean_file_info(&(game->file));
+	free_map(game->file.map_width, game->map);
 	destroy_texture(game);
 	if (game->frame_image)
 		mlx_destroy_image(game->mlx, game->frame_image);

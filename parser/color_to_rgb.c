@@ -31,6 +31,7 @@ int	color_to_rgb(char *color)
 	g = ft_atoi(rgb[1]);
 	b = ft_atoi(rgb[2]);
 	free_null_term_array(rgb);
+	free(color);
 	return (create_rgb(r, g, b));
 }
 

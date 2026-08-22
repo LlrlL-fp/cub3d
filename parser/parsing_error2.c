@@ -19,6 +19,6 @@ void	error_parsing_color(char *line, char *param, char *msg)
 
 void	error_parsing_identifier(char *line, char *param)
 {
-	printf("Error\nParsing failed : %s : %s Invalid identifier.\n",
+	printf("Error\nParsing failed : %s : %s Invalid identifier : must be one in {NO, SO, WE, EA, F, C}\n",
 		line, param);
 }

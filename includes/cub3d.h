@@ -13,7 +13,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <unistd.h>
@@ -42,7 +42,7 @@
 # define MOVE_SPEED		0.05
 //180 degres = PI en radians, on a besoin en radian pour cos et sin
 // pi = 3.14159265, pi/2 = 1.570796
-# define ROT_ANGLE_RADIAN 1.570796
+# define ROT_ANGLE_RADIAN 3.14159265/6
 
 //y = ligne, x = colonne
 typedef struct s_player
@@ -65,8 +65,6 @@ typedef struct s_file_info
 	char		*south_path;
 	char		*west_path;
 	char		*east_path;
-	char		*floor_color;
-	char		*ceiling_color;
 	int			ceiling_rgb;
 	int			floor_rgb;
 	int			map_starting_pos;
@@ -162,14 +160,16 @@ int			get_size_null_term_array(char **array);
 void		free_null_term_array(char **array);
 
 //init all
+bool		init_game(t_game *game, char *filename);
 bool		init_mlx(t_game *game);
 bool		init_image(t_game *game);
-bool		init_one_texture(t_game *game, t_texture *texture, char *path);
 bool		init_texture(t_game *game);
+
+//map
 char		**get_map_from_file(t_file_info file_info);
+void		free_map(int size, char **map);
 
 // draw
-void		draw_pixel(t_game *game, int x, int y, int color);
 void		draw_background(t_game *game);
 void		draw_wall(t_game *game);
 
@@ -185,13 +185,11 @@ int			exit_game(t_game *game);
 
 //event
 void		events_init(t_game *game);
-int			key_handler(int keycode, t_game *game);
 void		move_forward(t_game *game);
 void		move_backward(t_game *game);
 void		move_left(t_game *game);
 void		move_right(t_game *game);
 void		rotate(t_game *game, double angle, char side);
-int			key_handler(int keycode, t_game *game);
 
 //raycasting_calculate
 double		calculate_camera_x(int x);
@@ -199,9 +197,6 @@ void		calculate_ray_dir(t_game *game, double camera_x);
 void		calculate_delta_dist(t_game *game);
 void		calculate_step_sidedist_x(t_game *game);
 void		calculate_step_sidedist_y(t_game *game);
-void		perform_dda(t_game *game);
-void		perp_wall_dist(t_game *game);
-void		calculate_wall_height(t_game *game);
 void		raycasting(t_game *game);
 
 #endif

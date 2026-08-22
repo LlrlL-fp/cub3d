@@ -42,6 +42,8 @@ one character in {N, S, E, W}."
 #define MAP_SPACE_ACCESSIBLE "a space is accessible!"
 
 void	error_msg(char *msg);
+
+//parsing errors
 void	error_parsing(char *param, char *msg);
 void	error_parsing_double(char *line, char *param, char *param2, char *msg);
 void	error_parsing_with_info_type(char *line, char *msg, char *info_type);
@@ -55,3 +57,6 @@ void	error_parsing_map_multi_player(char *param, char *msg, int line_num,
 void	error_parsing_map_size(char *msg);
 void	error_parsing_map_nl(char *msg, int line_num);
 void	error_parsing_map_space(char *msg, int line_num, int col_num);
+
+//init texture error
+void	error_init_textures(char *texture, char *texture_path);

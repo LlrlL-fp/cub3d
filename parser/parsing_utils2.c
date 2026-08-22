@@ -32,9 +32,9 @@ bool	is_already_present(char c, t_file_info *file_info)
 	else if (c == 'W')
 		return (!(file_info->west_path == NULL));
 	else if (c == 'F')
-		return (!(file_info->floor_color == NULL));
+		return (!(file_info->floor_rgb == 0));
 	else if (c == 'C')
-		return (!(file_info->ceiling_color == NULL));
+		return (!(file_info->ceiling_rgb == 0));
 	return (false);
 }
 
