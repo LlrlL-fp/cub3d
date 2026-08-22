@@ -89,14 +89,11 @@ static bool	handle_textures_f_c(char **line_split, char *line,
 
 static bool	check_line(char *line, int *nb_l_valid, t_file_info *file_info)
 {
-	int		line_len;
 	char	**line_split;
 	bool	res;
 
 	res = true;
-	line_len = ft_strlen(line);
-	if (line[line_len - 1] == '\n')
-		line[line_len - 1] = '\0';
+	get_line_len_without_nl(line);
 	line_split = ft_split(line, ' ');
 	if (!line_split)
 		return (error_parsing(line, MALLOC_FAILED), false);

@@ -12,6 +12,22 @@
 
 #include "../includes/cub3d.h"
 
+static void	dda_step(t_game *game, int *map_x, int *map_y)
+{
+	if (game->ray.side_dist_x < game->ray.side_dist_y)
+	{
+		game->ray.side_dist_x += game->ray.delta_dist_x;
+		*map_x += game->ray.step_x;
+		game->ray.side = 0;
+	}
+	else
+	{
+		game->ray.side_dist_y += game->ray.delta_dist_y;
+		*map_y += game->ray.step_y;
+		game->ray.side = 1;
+	}
+}
+
 static bool	perform_dda(t_game *game)
 {
 	int		hit;
@@ -23,18 +39,7 @@ static bool	perform_dda(t_game *game)
 	map_y = (int)game->player.pos_y;
 	while (hit == 0)
 	{
-		if (game->ray.side_dist_x < game->ray.side_dist_y)
-		{
-			game->ray.side_dist_x += game->ray.delta_dist_x;
-			map_x += game->ray.step_x;
-			game->ray.side = 0;
-		}
-		else
-		{
-			game->ray.side_dist_y += game->ray.delta_dist_y;
-			map_y += game->ray.step_y;
-			game->ray.side = 1;
-		}
+		dda_step(game, &map_x, &map_y);
 		if (map_x < 0 || map_x >= game->file.map_len
 			|| map_y < 0 || map_y >= game->file.map_width)
 			return (false);

@@ -41,8 +41,8 @@
 
 # define MOVE_SPEED		0.05
 //180 degres = PI en radians, on a besoin en radian pour cos et sin
-// pi = 3.14159265, pi/2 = 1.570796
-# define ROT_ANGLE_RADIAN 3.14159265/6
+// pi = 3.14159265, pi/2 = 1.570796, pi/4 = 0.785398, pi/6 = 0.523599, pi/3 = 1.047198
+# define ROT_ANGLE_RADIAN 0.523599
 
 //y = ligne, x = colonne
 typedef struct s_player

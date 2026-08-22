@@ -142,7 +142,7 @@ static int	calculate_texture_y(t_game *game, t_texture *texture, int y)
 
 	wall_top = WIN_HEIGHT / 2 - game->ray.line_height / 2;
 	tex_y = (int)(((double)(y - wall_top) / game->ray.line_height)
-		* texture->height);
+			* texture->height);
 	if (tex_y >= texture->height)
 		tex_y = texture->height - 1;
 	return (tex_y);
